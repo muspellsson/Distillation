@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Column"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="column">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="xF" type="xs:double"/>
+        <xs:element name="xD" type="xs:double"/>
+        <xs:element name="xB" type="xs:double"/>
+        <xs:element name="TD" type="xs:double"/>
+        <xs:element name="TB" type="xs:double"/>
+        <xs:element name="Tm" type="xs:double"/>
+        <xs:element name="Tp" type="xs:double"/>
+        <xs:element name="bD" type="xs:double"/>
+        <xs:element name="bB" type="xs:double"/>
+        <xs:element name="k"  type="xs:double"/>
+        <xs:element name="r"  type="xs:double"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
