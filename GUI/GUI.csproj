@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,8 +73,17 @@
     <Compile Include="Plotter.Designer.cs">
       <DependentUpon>Plotter.cs</DependentUpon>
     </Compile>
+    <Compile Include="PointInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PointInputDialog.Designer.cs">
+      <DependentUpon>PointInputDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ErrorBox.resx">
       <DependentUpon>ErrorBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -77,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Plotter.resx">
       <DependentUpon>Plotter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointInputDialog.resx">
+      <DependentUpon>PointInputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

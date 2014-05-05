@@ -99,7 +99,6 @@ namespace Distillation
         {
             double AF, AD, AB, AG;
             AF = this.partialGibbs(this.Concentrations.Feed);
-            System.Console.WriteLine(this.Concentrations.Reboiler);
             AD = this.partialGibbs(this.Concentrations.RefluxDrum);
             AB = this.partialGibbs(this.Concentrations.Reboiler);
             AG = (AF - e * AD - (1 - e) * AB);

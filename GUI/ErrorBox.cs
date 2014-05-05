@@ -21,7 +21,7 @@ namespace GUI
 
         private void addError(string error)
         {
-            this.textBox1.Text += "Ошибка 1:" +
+            this.textBox1.Text += "Ошибка 1: " +
                     error + Environment.NewLine + Environment.NewLine;
         }
 

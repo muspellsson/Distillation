@@ -14,9 +14,12 @@ namespace GUI
 {
     public partial class Form1 : Form
     {
+        private Approximation apx;
+
         public Form1()
         {
             InitializeComponent();
+            apx = new Approximation();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,10 +39,7 @@ namespace GUI
             if (Double.TryParse(s, 
                 NumberStyles.Number,
                 CultureInfo.InvariantCulture,
-                out value))
-            {
-
-            }
+                out value)) { }
             else if (e.KeyChar == '\b') { }
             else { e.Handled = true; }
         }
@@ -123,6 +123,31 @@ namespace GUI
             }
         }
 
+        private void addPoint(double q, double g)
+        {
+            ListViewItem lvi;
+
+            lvi = new ListViewItem(q.ToString("G5"));
+            lvi.SubItems.Add(g.ToString("G5"));
+            this.listView1.Items.Insert(this.apx.Find(q), lvi);
+        }
+
+        private void loadApproximation(OpenFileDialog dlg)
+        {
+            if (!this.apx.Load(dlg.FileName))
+            {
+                ErrorBox.Error("Ошибка при загрузке файла");
+            }
+            else
+            {
+                this.listView1.Items.Clear();
+                foreach (Distillation.Point p in this.apx.Points)
+                {
+                    this.addPoint(p.Q, p.G);
+                }
+            }
+        }
+
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg1 = new OpenFileDialog();
@@ -139,6 +164,7 @@ namespace GUI
                 }
                 else if (this.tabControl1.SelectedIndex == 1)
                 {
+                    this.loadApproximation(dlg1);
                 }
             }
         }
@@ -153,6 +179,7 @@ namespace GUI
             else
             {
                 this.fillTextBoxes(col);
+                plotter1.Plot(col.Irreversibility, col.ReversibleEfficiency);
             }
         }
 
@@ -177,6 +204,24 @@ namespace GUI
             }
         }
 
+        private void saveApproximation(SaveFileDialog dlg)
+        {
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (!this.apx.Correct)
+                {
+                    ErrorBox.Error("Необходимы минимум две точки");
+                }
+                else
+                {
+                    if (!this.apx.Save(dlg.FileName))
+                    {
+                        ErrorBox.Error("Ошибка при сохранении файла");
+                    }
+                }
+            }
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg1 = new SaveFileDialog();
@@ -191,6 +236,60 @@ namespace GUI
             }
             else if (tabControl1.SelectedIndex == 1)
             {
+                this.saveApproximation(dlg1);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.listView1.Items.Clear();
+            this.apx = new Approximation();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ListView.SelectedIndexCollection idcs =
+                this.listView1.SelectedIndices;
+            foreach (int idx in idcs)
+            {
+                this.apx.RemovePoint(idx);
+                this.listView1.Items.RemoveAt(idx);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            PointInputDialog pd = new PointInputDialog();
+            pd.ShowDialog();
+
+            if (pd.DialogResult == DialogResult.OK)
+            {
+                this.apx.AddPoint(pd.Q, pd.G);
+                this.addPoint(pd.Q, pd.G);
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (this.apx.Calculate())
+            {
+                System.Console.WriteLine("{0} {1}", this.apx.Irreversibility, this.apx.ReversibleEfficiency);
+                this.plotter2.Plot(this.apx.Irreversibility,
+                    this.apx.ReversibleEfficiency);
+                this.tbA2.Text = this.apx.Irreversibility
+                    .ToString("G5", CultureInfo.InvariantCulture);
+                this.tbB2.Text = this.apx.ReversibleEfficiency
+                    .ToString("G5", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                ErrorBox.Error("Произошла ошибка при вычислениях");
             }
         }
     }

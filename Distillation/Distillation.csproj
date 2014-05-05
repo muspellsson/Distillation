@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Approximation.cs" />
     <Compile Include="Coefficients.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="Concentrations.cs" />
@@ -49,6 +50,10 @@
     <Compile Include="Temperatures.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Approximation.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Column.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
